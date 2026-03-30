@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+
+const news = await getCollection('news');
+const sorted = news.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+const categoryLabels: Record<string, string> = {
+  update: 'Update',
+  leistung: 'Leistung',
+  rechtsprechung: 'Rechtsprechung',
+  tipp: 'Tipp',
+  wartung: 'Wartung',
+};
+---
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WeCare News</title>
+    <style>
+      body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
+      h1 { font-size: 1.5rem; }
+      .news-item { border-bottom: 1px solid #e5e5e5; padding: 1rem 0; }
+      .news-item:last-child { border-bottom: none; }
+      .meta { font-size: 0.85rem; color: #666; }
+      .category { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+      .category-update { background: #dbeafe; color: #1e40af; }
+      .category-leistung { background: #dcfce7; color: #166534; }
+      .category-rechtsprechung { background: #fef3c7; color: #92400e; }
+      .category-tipp { background: #f3e8ff; color: #6b21a8; }
+      .category-wartung { background: #fee2e2; color: #991b1b; }
+      .pinned { border-left: 3px solid #2563eb; padding-left: 0.75rem; }
+      a { color: #2563eb; text-decoration: none; }
+      a:hover { text-decoration: underline; }
+    </style>
+  </head>
+  <body>
+    <h1>WeCare News</h1>
+    <p class="meta">Neuigkeiten rund um Sozialversicherungen und Pflege in der Schweiz.</p>
+    {sorted.map((entry) => (
+      <div class={`news-item ${entry.data.pinned ? 'pinned' : ''}`}>
+        <div class="meta">
+          {entry.data.date}
+          <span class={`category category-${entry.data.category}`}>
+            {categoryLabels[entry.data.category] ?? entry.data.category}
+          </span>
+        </div>
+        <h3><a href={`/service/news/${entry.id}/`}>{entry.data.title}</a></h3>
+        <p>{entry.data.summary}</p>
+      </div>
+    ))}
+    <p class="meta" style="margin-top: 2rem;">
+      <a href="/service/api/news.json">JSON Feed</a>
+    </p>
+  </body>
+</html>
