@@ -6,7 +6,7 @@ const news = defineCollection({
   schema: z.object({
     title: z.string(),
     date: z.string(),
-    category: z.enum(['update', 'leistung', 'rechtsprechung', 'tipp', 'wartung']),
+    category: z.enum(['update', 'leistung', 'rechtsprechung', 'tipp', 'wartung', 'branche']),
     summary: z.string(),
     leistungen: z.array(z.string()).optional(),
     pinned: z.boolean().default(false),
