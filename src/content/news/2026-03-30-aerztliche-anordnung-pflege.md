@@ -6,7 +6,7 @@ summary: "Ohne vorgängige ärztliche Anordnung keine Vergütung durch die Krank
 leistungen:
   - spitex_kvg
   - spitex_angehoerige
-pinned: true
+pinned: false
 ---
 
 Das Bundesgericht hat in seinem Urteil **9C_9/2025** vom 23. Februar 2026 klargestellt, dass die Leistungspflicht der obligatorischen Krankenpflegeversicherung erst mit der ärztlichen Anordnung beginnt.
